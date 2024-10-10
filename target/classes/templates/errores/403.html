@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Acceso Denegado</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .error-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .error-box {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        }
+        .error-box h1 {
+            font-size: 4rem;
+            color: #dc3545;
+        }
+        .error-box p {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: #fff;
+            margin-top: 20px;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="error-container">
+    <div class="error-box">
+        <h1>403</h1>
+        <p><strong>Acceso denegado.</strong><br/>
+            No tienes permisos para ver esta página o ejecutar esta acción.</p>
+        <a th:href="@{/}" class="btn btn-custom">Regresar a la página principal</a>
+    </div>
+</div>
+
+</body>
+</html>

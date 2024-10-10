@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Inicio</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 2rem;
+        }
+        h1 {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Comerciales Melly</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/users/Usuarios}">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/cat/categorias}">Categorías</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/pro/productos}">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/ven/ventas}">Ventas</a>
+                </li>
+            </ul>
+            <form method="POST" th:action="@{/logout}">
+                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h1 class="text-center">Lista de Categorias</h1>
+
+    <div class="text-right mb-3">
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/cat/agregarcategoria}" class="btn btn-success">Crear Una Categoria</a>
+    </div>
+
+    <div th:if="${categorias != null and !categorias.empty}">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Categoria</th>
+                <th>Descripción</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="categoria : ${categorias}">
+                <td th:text="${categoria.idCategoria}">Mostrar ID</td>
+                <td th:text="${categoria.nombreCategoria}">Mostrar Usuario</td>
+                <td th:text="${categoria.descripcion}">Mostrar Usuario</td>
+
+                <td sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/cat/obtenerCtegoria/{id}(id=${categoria.idCategoria})}" class="btn btn-warning">Editar</a>
+                </td>
+                <td sec:authorize="hasRole('ROLE_ADMIN')">
+                    <form th:action="@{/cat/eliminarCategoria}">
+                        <input type="hidden" name="idCategoria" th:value="${categoria.idCategoria}" />
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${categorias == null or categorias.empty}" class="alert alert-info" role="alert">
+        Lista Vacía
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
