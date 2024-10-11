@@ -18,10 +18,7 @@ import org.springframework.validation.BindingResult;
 import javax.validation.Valid;
 
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.LongFunction;
 
 @Controller
 @Slf4j
@@ -43,7 +40,7 @@ public class AdminController {
 
     @GetMapping("/")
     public String inicio(Model model, @AuthenticationPrincipal User user){
-        return "/pages/LandingPage";
+        return "/LandingPage";
     }
 
     //-------------------------------------------Usuarios---------------------------------------------------------------

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: www.edu.udb.sv.ProyectoComercialesMellyApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.513 s -- in www.edu.udb.sv.ProyectoComercialesMellyApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.960 s -- in www.edu.udb.sv.ProyectoComercialesMellyApplicationTests
