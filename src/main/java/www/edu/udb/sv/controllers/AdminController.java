@@ -40,7 +40,7 @@ public class AdminController {
 
     @GetMapping("/")
     public String inicio(Model model, @AuthenticationPrincipal User user){
-        return "/LandingPage";
+        return "LandingPage";
     }
 
     //-------------------------------------------Usuarios---------------------------------------------------------------
@@ -48,11 +48,11 @@ public class AdminController {
     public String inicioUsuarios(Model model){
         var usuarios = usuarioService.listarUsuarios();
         model.addAttribute("usuarios", usuarios);
-        return "/pages/index";
+        return "pages/index";
     }
     @GetMapping("/users/agregar")
     public String agregar(Usuario usuario){
-        return "/pages/modificar";
+        return "pages/modificar";
     }
 
     @PostMapping("/users/guardarUsuario")
@@ -60,24 +60,24 @@ public class AdminController {
 
         if (result.hasErrors()){
             model.addAttribute("usuario",usuario);
-            return "/pages/modificar";
+            return "pages/modificar";
         }
 
         usuarioService.registrarUsuarioConRol(usuario.getIdUsuario(),usuario.getUsername(),usuario.getPassword(),rol);
-        return "redirect:/users/Usuarios";
+        return "redirect:users/Usuarios";
     }
 
     @GetMapping("/users/obtenerUsuario/{id}")
     public String obtenerUsuario(@PathVariable("id") Long idUsuario, Model model){
         Usuario usuario = usuarioService.obtenerUsuarioporID(idUsuario);
         model.addAttribute("usuario",usuario);
-        return "/pages/modificar";
+        return "pages/modificar";
     }
 
     @GetMapping("/users/eliminarUsuario")
     public String eliminarUsuario(@RequestParam Long idUsuario){
         usuarioService.eliminar(idUsuario);
-        return "redirect:/users/Usuarios";
+        return "redirect:users/Usuarios";
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -87,12 +87,12 @@ public class AdminController {
         public String inicioCategoria(Model model){
         var categorias = categoriaService.ListarCategorias();
         model.addAttribute("categorias", categorias);
-        return "/pages/indexCat";
+        return "pages/indexCat";
         }
 
         @GetMapping("/cat/agregarcategoria")
         public String agregar(Categoria categoria){
-        return "/pages/modificarCat";
+        return "pages/modificarCat";
     }
 
         @PostMapping("/cat/guardarCategoria")
@@ -105,7 +105,7 @@ public class AdminController {
         public String obtenerCategoria(@PathVariable("id") Long idCategoria, Model model){
             Categoria categoria = categoriaService.ObtenerCategoriaporID(idCategoria);
             model.addAttribute("categoria",categoria);
-            return "/pages/modificarCat";
+            return "pages/modificarCat";
         }
 
         @GetMapping("/cat/eliminarCategoria")
@@ -121,7 +121,7 @@ public class AdminController {
     public String inicioProducto(Model model){
         var productos = productoService.LisatarProductos();
         model.addAttribute("productos", productos);
-        return "/pages/indexPro";
+        return "pages/indexPro";
     }
 
     @GetMapping("/pro/agregarProducto")
@@ -129,7 +129,7 @@ public class AdminController {
         // Obtener todas las categorías para el formulario
         List<Categoria> categorias = categoriaService.ListarCategorias();
         model.addAttribute("categorias", categorias);
-        return "/pages/modificarPro";
+        return "pages/modificarPro";
     }
 
     @PostMapping("/pro/guardarProducto")
@@ -145,7 +145,7 @@ public class AdminController {
         List<Categoria> categorias = categoriaService.ListarCategorias();
         model.addAttribute("categorias", categorias);
         model.addAttribute("producto", producto);
-        return "/pages/modificarPro";
+        return "pages/modificarPro";
     }
 
     @GetMapping("/pro/eliminarProducto")
@@ -161,7 +161,7 @@ public class AdminController {
         public String inicioVentas(Model model){
         var ventas = ventaService.listarventas();
         model.addAttribute("ventas", ventas);
-        return "/pages/indexVent";
+        return "pages/indexVent";
         }
 
         @GetMapping("/ven/agregarVenta")
@@ -170,7 +170,7 @@ public class AdminController {
             List<Producto> productos = productoService.LisatarProductos();
             model.addAttribute("productos", productos);
             model.addAttribute("ventas",venta);
-            return "/pages/modificarVen";
+            return "pages/modificarVen";
         }
 
         @PostMapping("/ven/guardarVenta")
@@ -186,7 +186,7 @@ public class AdminController {
             List<Producto> productos = productoService.LisatarProductos();
             model.addAttribute("productos",productos);
             model.addAttribute("ventas",venta);
-            return "/pages/modificarVen";
+            return "pages/modificarVen";
         }
 
         @GetMapping("/ven/eliminarVenta")
