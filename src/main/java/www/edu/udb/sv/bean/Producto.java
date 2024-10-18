@@ -24,6 +24,7 @@ public class Producto implements Serializable {
     private int cantidad;
 
     // Relación ManyToOne con Categoria
+
     @ManyToOne
     @JoinColumn(name = "idCategoria")
     private Categoria categoria;

@@ -22,8 +22,8 @@ public class VentaValidator implements Validator {
         Venta venta = (Venta) target;
 
         // Validar campos vacíos
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombreCliente", "field.nombreCliente.required", "El nombre del cliente es obligatorio");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "DUI", "field.DUI.required", "El número de DUI es obligatorio");
+        ValidationUtils.rejectIfEmpty(errors, "nombreCliente", "field.nombreCliente.required", "El nombre del cliente es obligatorio");
+        ValidationUtils.rejectIfEmpty(errors, "DUI", "field.DUI.required", "El número de DUI es obligatorio");
 
         // Validar formato del DUI
         Matcher matcher = DUI_PATTERN.matcher(venta.getDUI());
@@ -33,12 +33,8 @@ public class VentaValidator implements Validator {
 
         // Validar cantidad mayor que 0
         if (venta.getCantidadVendida() <= 0) {
-            errors.rejectValue("cantidad", "field.cantidad.invalid", "La cantidad debe ser mayor que 0");
+            errors.rejectValue("cantidadVendida", "field.cantidad.invalid", "La cantidad debe ser mayor que 0");
         }
 
-        // Validar total mayor que 0
-        if (venta.getTotal() == null || venta.getTotal().compareTo(BigDecimal.ZERO) <= 0) {
-            errors.rejectValue("total", "field.total.invalid", "El total debe ser mayor que 0");
-        }
     }
 }

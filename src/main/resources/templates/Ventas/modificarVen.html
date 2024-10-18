@@ -49,10 +49,10 @@
 
 <div class="container">
     <h2 class="text-center">Registrar Venta</h2>
-    <a th:href="@{/}" class="btn btn-secondary mb-3">Regresar</a>
+    <a th:href="@{/ven/ventas}" class="btn btn-secondary mb-3">Regresar</a>
 
-    <form th:action="@{/ven/guardarVenta}" method="post">
-        <input type="hidden" id="idVenta" name="idVenta" th:value="${ventas.idVenta != null ? ventas.idVenta : 0}"/>
+    <form th:action="@{/ven/guardarVenta}" th:object="${venta}" method="post">
+        <input type="hidden" id="idVenta" name="idVenta" th:value="${venta.idVenta != null ? venta.idVenta : 0}"/>
 
         <div class="form-group">
             <label for="idProducto">Producto:</label>
@@ -62,27 +62,31 @@
                 <option th:each="producto : ${productos}"
                         th:if="${producto.cantidad > 0}"
                         th:value="${producto.idProducto}"
-                        th:text="${producto.nombre}"
-                        th:selected="${ventas.producto != null and ventas.producto.idProducto == producto.idProducto}">
-
+                        th:text="${producto.nombre}">
                 </option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="cantidad">Cantidad:</label>
-            <input type="number" id="cantidad" name="cantidad" th:value="${ventas.cantidadVendida}"  required class="form-control"/>
+            <label for="cantidadVendida">Cantidad:</label>
+            <input type="number" id="cantidadVendida" name="cantidadVendida" th:value="${venta.cantidadVendida}"  required class="form-control"/>
+            <div th:if="${#fields.hasErrors('cantidadVendida')}" class="text-danger">
+                <p th:errors="*{cantidadVendida}">Se debe colocar una cantidad</p>
+            </div>
         </div>
 
 
         <div class="form-group">
             <label for="nombreCliente">Nombre completo del cliente: </label>
-            <input type="text" id="nombreCliente" name="nombreCliente" th:value="${ventas.nombreCliente}"  required class="form-control"/>
+            <input type="text" id="nombreCliente" name="nombreCliente" th:value="${venta.nombreCliente}"  required class="form-control"/>
         </div>
 
         <div class="form-group">
             <label for="DUI">Ingrese el numéro de su DUI (formato xxxxxxxx-x): </label>
-            <input type="text" id="DUI" name="DUI" th:value="${ventas.DUI}"  required class="form-control"/>
+            <input type="text" id="DUI" name="DUI" th:value="${venta.DUI}"  required class="form-control"/>
+            <div th:if="${#fields.hasErrors('DUI')}" class="text-danger">
+                <p th:errors="*{DUI}">Se debe colocar un DUI</p>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary btn-block">Registrar</button>

@@ -16,9 +16,6 @@
         h2 {
             margin-bottom: 1.5rem;
         }
-        .footer-text {
-            font-size: 0.9rem;
-        }
     </style>
 </head>
 <body>
@@ -31,7 +28,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">Inicio</a>
+                    <a class="nav-link" th:href="@{/static}">Inicio</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/cat/categorias}">Categorías</a>
@@ -48,27 +45,26 @@
 </nav>
 
 <div class="container">
-    <h2 class="text-center">Registrar Usuario</h2>
-    <a th:href="@{/}" class="btn btn-secondary mb-3">Regresar</a>
+    <h2 class="text-center">Registrar Categoria</h2>
+    <a th:href="@{/cat/categorias}" class="btn btn-secondary mb-3">Regresar</a>
 
-    <form th:action="@{/users/guardarUsuario}" method="post">
-        <input type="hidden" id="idUsuario" name="idUsuario" th:value="${usuario.idUsuario != null ? usuario.idUsuario : 0}"/>
+    <form th:action="@{/cat/guardarCategoria}" th:object="${categoria}" method="post">
+        <input type="hidden" id="idCategoria" name="idCategoria" th:value="${categoria.idCategoria != null ? categoria.idCategoria : 0}"/>
+
         <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" th:value="${usuario.username}" required class="form-control"/>
+            <label for="nombreCategoria">Nombre de la Categoría:</label>
+            <input type="text" id="nombreCategoria" name="nombreCategoria" th:value="${categoria.nombreCategoria}" required class="form-control"/>
+            <div th:if="${#fields.hasErrors('nombreCategoria')}" class="text-danger">
+                <p th:errors="*{nombreCategoria}">El nombre de la categoria es obligatorio</p>
+            </div>
         </div>
 
         <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" th:value="${usuario.password}" required class="form-control"/>
-        </div>
-
-        <div class="form-group">
-            <label for="rol">Rol:</label>
-            <select id="rol" name="rol" class="form-control" required>
-                <option value="ROLE_ADMIN">Admin</option>
-                <option value="ROLE_USER">User</option>
-            </select>
+            <label for="descripcion">Descripción:</label>
+            <input type="text" id="descripcion" name="descripcion" th:value="${categoria.descripcion}" required class="form-control"/>
+            <div th:if="${#fields.hasErrors('descripcion')}" class="text-danger">
+                <p th:errors="*{descripcion}">La descripcion es obligatoria</p>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary btn-block">Registrar</button>

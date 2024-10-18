@@ -31,5 +31,9 @@ public class ProductoValidator implements Validator {
         if (producto.getCantidad() < 0) {
             errors.rejectValue("cantidad", "field.cantidad.invalid", "La cantidad debe ser mayor o igual a 0");
         }
+        //Validar que el nombre tenga más de 6 caracteres
+        if (producto.getNombre() != null && producto.getNombre().length() < 6) {
+            errors.rejectValue("nombre", "field.nombre.tooShort", "El nombre del producto debe tener al menos 5 caracteres");
+        }
     }
 }

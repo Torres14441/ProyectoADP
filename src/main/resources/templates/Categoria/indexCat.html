@@ -29,13 +29,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/Usuarios}">Usuarios</a>
+                    <a class="nav-link" th:href="@{/users/Usuarios}">Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/cat/categorias}">Categorías</a>
+                    <a class="nav-link" th:href="@{/cat/categorias}">Categorías</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/pro/productos}">Productos</a>
+                    <a class="nav-link" th:href="@{/pro/productos}">Productos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" th:href="@{/ven/ventas}">Ventas</a>
@@ -49,45 +49,36 @@
 </nav>
 
 <div class="container">
-    <h1 class="text-center">Ventas</h1>
+    <h1 class="text-center">Lista de Categorias</h1>
 
     <div class="text-right mb-3">
-        <a th:href="@{/ven/agregarVenta}" class="btn btn-success">Registrar una venta</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/cat/agregarcategoria}" class="btn btn-success">Crear Una Categoria</a>
     </div>
 
-    <div th:if="${ventas != null and !ventas.empty}">
+    <div th:if="${categorias != null and !categorias.empty}">
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
             <tr>
                 <th>ID</th>
-                <th>Producto</th>
-                <th>Cantidad Vendida</th>
-                <th>Total</th>
-                <th>Cliente</th>
-                <th>DUI</th>
-                <th>Fecha de venta</th>
+                <th>Categoria</th>
+                <th>Descripción</th>
                 <th sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
                 <th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
             </tr>
             </thead>
 
             <tbody>
-            <tr th:each="venta : ${ventas}">
-                <td th:text="${venta.idVenta}">Mostrar ID</td>
-                <td th:text="${venta.producto.nombre}">Mostrar Producto</td>
-                <td th:text="${venta.cantidadVendida}">Mostrar Cantidad</td>
-                <td th:text="${venta.total}">Mostrar Total</td>
-                <td th:text="${venta.nombreCliente}">Mostrar nombre del cliente</td>
-                <td th:text="${venta.DUI}">Mostrar el DUI</td>
-                <td th:text="${venta.fechaVenta}">Mostrar Fecha </td>
-
+            <tr th:each="categoria : ${categorias}">
+                <td th:text="${categoria.idCategoria}">Mostrar ID</td>
+                <td th:text="${categoria.nombreCategoria}">Mostrar Categoria</td>
+                <td th:text="${categoria.descripcion}">Mostrar Descripción</td>
 
                 <td sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/ven/obtenerVenta/{id}(id=${venta.idVenta})}" class="btn btn-warning">Editar</a>
+                    <a th:href="@{/cat/obtenerCtegoria/{id}(id=${categoria.idCategoria})}" class="btn btn-warning">Editar</a>
                 </td>
                 <td sec:authorize="hasRole('ROLE_ADMIN')">
-                    <form th:action="@{/ven/eliminarVenta}">
-                        <input type="hidden" name="idVenta" th:value="${venta.idVenta}" />
+                    <form th:action="@{/cat/eliminarCategoria}">
+                        <input type="hidden" name="idCategoria" th:value="${categoria.idCategoria}" />
                         <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">Eliminar</button>
                     </form>
                 </td>
@@ -96,7 +87,7 @@
         </table>
     </div>
 
-    <div th:if="${ventas == null or ventas.empty}" class="alert alert-info" role="alert">
+    <div th:if="${categorias == null or categorias.empty}" class="alert alert-info" role="alert">
         Lista Vacía
     </div>
 </div>
